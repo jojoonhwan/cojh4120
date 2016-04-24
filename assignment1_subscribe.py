@@ -36,8 +36,8 @@ def on_message(client,userdata, message):
 		else :
 		 	print"(low)\n"
 
-		 temp1 = False
-		 humi1 = False
+		temp1 = False
+		humi1 = False
 
 
 temp = 0
@@ -50,7 +50,7 @@ client = mqtt.Client("subscribe_Client")
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connet("localhost" , 1883, 60)
+client.connect("localhost" , 1883, 60)
 
 client.loop_forever()
 

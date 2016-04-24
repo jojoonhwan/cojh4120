@@ -1,4 +1,4 @@
-import paho.mqtt.clinet as mqtt
+import paho.mqtt.client as mqtt
 import time
 import random
 
@@ -10,9 +10,9 @@ client.loop_start()
 
 while True:
 
-	temperature = random(20,35)
+	temperature = random.randrange(20,35)
 	print "Temperature : " + str(temperature)
-	client.publish("environment/temperature",temprature)
+	client.publish("environment/temperature",temperature)
 	time.sleep(2)
 
 

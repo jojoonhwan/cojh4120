@@ -1,4 +1,4 @@
-import paho.mqtt.clinet as mqtt
+import paho.mqtt.client as mqtt
 import time
 import random
 
@@ -10,7 +10,7 @@ client.loop_start()
 
 while True:
 
-	humidity  = random(30,95)
+	humidity  = random.randrange(30,95)
 	print "humidity : " + str(humidity)
 	client.publish("environment/humidity",humidity/100.0)
 	time.sleep(2)
