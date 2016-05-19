@@ -7,7 +7,7 @@ trig_pin = 13
 echo_pin = 19
 LED = (17, 27, 22)
 instance = dht11.DHT11(pin=5)
-
+#gpio 설정
 gpio.setwarnings(False)
 gpio.setmode(gpio.BCM)
 gpio.setup(trig_pin, gpio.OUT)
@@ -18,8 +18,8 @@ result_temp = 0 #초기화
 
 try:
 	while True:
-		result = instance.read()
-
+		result = instance.read() #dht11에서 읽은 값 저장
+	
 		gpio.output(trig_pin, False)
 		time.sleep(1)
 		gpio.output(trig_pin, True)
@@ -40,23 +40,24 @@ try:
 		if result.is_valid(): #유효한 온도 입력시
 			result_temp = result.temperature #온도값 저장
 			print"Temp : %d C" % result_temp
-			if result_temp <= 30: #조건에 맞게 LED 설정
-				if distance >= 100 :
+			#조건에 맞게 LED 설정
+			if result_temp <= 30:  # 온도가 30도 이하일때
+				if distance >= 100 : #거리가 100cm 이상일때 Green
 					gpio.output(22, True)
 					gpio.output(27, False)
 					gpio.output(17, False)
 					print"Green"
-				elif distance >= 30 and distance < 100:
+				elif distance >= 30 and distance < 100:  #거리가 30cm - 100cm 일때 Yellow
 				  	gpio.output(22, False)
 					gpio.output(27, True)
 					gpio.output(17, False)
 					print"Yellow"
-				else :
+				else : #거리가 30cm 미만일 때 Red
 					gpio.output(22, False)
 					gpio.output(27, False)
 					gpio.output(17, True)
 					print"Red"
-			else :
+			else : #온도가 30도 이상일때 LED OFF
 				gpio.output(17, False)
 				gpio.output(27, False)
 				gpio.output(22, False)
