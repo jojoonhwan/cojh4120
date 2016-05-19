@@ -1,5 +1,5 @@
 import RPi.GPIO as gpio
-import dht11
+import dht11  
 import time
 import datetime
 
@@ -12,9 +12,9 @@ gpio.setwarnings(False)
 gpio.setmode(gpio.BCM)
 gpio.setup(trig_pin, gpio.OUT)
 gpio.setup(echo_pin, gpio.IN)
-for pin in LED:
+for pin in LED: # LED 핀설정
 	gpio.setup(pin, gpio.OUT)
-result_temp = 0
+result_temp = 0 #초기화
 
 try:
 	while True:
@@ -37,10 +37,10 @@ try:
 
 		print"Distance : ", distance, "cm"
 
-		if result.is_valid():
-			result_temp = result.temperature
+		if result.is_valid(): #유효한 온도 입력시
+			result_temp = result.temperature #온도값 저장
 			print"Temp : %d C" % result_temp
-			if result_temp <= 30:
+			if result_temp <= 30: #조건에 맞게 LED 설정
 				if distance >= 100 :
 					gpio.output(22, True)
 					gpio.output(27, False)
@@ -61,7 +61,7 @@ try:
 				gpio.output(27, False)
 				gpio.output(22, False)
 				print"off"
-		else:
+		else: #유효한 값이 아닐 때 LED 설정
 			print"Temp : %d C" % result_temp
 			if result_temp <= 30:
 				if distance >= 100 :
