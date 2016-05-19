@@ -1,29 +1,28 @@
 import paho.mqtt.client as mqtt
 import RPi.GPIO as gpio
 
-a = b = c = d = None
+a = b = c = d = None #on_message에서 사용할 전역 변수 선언
 
-LED = (17, 27, 22)
+LED = (17, 27, 22) # LED 핀 정의
 
-def on_connect(client, userData, flags, rc):
-	if rc == 0:
+def on_connect(client, userData, flags, rc): #구독할 TOPIC명 저장
+	if rc == 0: 
 		client.subscribe('environment/temperature')
 		client.subscribe('environment/ultrasonic')
 		print "OK"
 	else:
 		print "fail"
 
-def on_message(client, userData, message):
+def on_message(client, userData, message): 
 	global a, b, c, d
-	if message.topic == 'environment/ultrasonic':
-		
-		a = float(message.payload)
+	if message.topic == 'environment/ultrasonic': # 초음파 센서에서 TOPIC이 전송된 경우
+		a = float(message.payload) #값 저장
 		b = True
-	elif message.topic == 'environment/temperature':
+	elif message.topic == 'environment/temperature': #온도 센서에서 TOPIC이 전송된 경우
 		c = float(message.payload)
 		d = True
 
-	if b == True:
+	if b == True: #유효한 값일때
 		if d == True:
 			if c <= 30:
 				if a >= 100:
@@ -47,7 +46,7 @@ def on_message(client, userData, message):
 				gpio.output(22, False)
 				print"off"
 			d = False
-	 	else:
+	 	else: #유효한 값이 아닐때
 			
 			if c <= 30:
 				if a >= 100:
@@ -78,7 +77,7 @@ def on_message(client, userData, message):
 
 gpio.setwarnings(False)
 gpio.setmode(gpio.BCM)
-for pin in LED:
+for pin in LED: # LED 핀 순차 입력
 	gpio.setup(pin, gpio.OUT)
 
 
