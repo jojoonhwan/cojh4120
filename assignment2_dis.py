@@ -4,18 +4,18 @@ import time
 
 trig_pin = 13
 echo_pin = 19
-
+#GPIO 설정
 gpio.setwarnings(False) 
 gpio.setmode(gpio.BCM)
 gpio.setup(trig_pin,gpio.OUT)
 gpio.setup(echo_pin,gpio.IN)
 
-
+#MQTT 설정
 client = mqtt.Client()
 client.connect("localhost",1883)
 client.loop_start()
 try:
-	while True :
+	while True : #while(1)
 		gpio.output(trig_pin,False)
 		time.sleep(1)
 		gpio.output(trig_pin,True)
@@ -25,8 +25,8 @@ try:
 			pulse_start = time.time()
 		while gpio.input(echo_pin) == 1:
 			pulse_end = time.time()
-
-		pulse_duration = pulse_end - pulse_start
+		#초음파 센서에서 거리 계산 식
+		pulse_duration = pulse_end - pulse_start 
 		distance = pulse_duration*17000
 		distance = round(distance,2)
 		print"Distance : " ,distance, "cm"
