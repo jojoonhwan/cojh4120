@@ -5,7 +5,7 @@ import time
 trig_pin = 13
 echo_pin = 19
 
-gpio.setwarnings(False)
+gpio.setwarnings(False) 
 gpio.setmode(gpio.BCM)
 gpio.setup(trig_pin,gpio.OUT)
 gpio.setup(echo_pin,gpio.IN)
@@ -32,7 +32,7 @@ try:
 		print"Distance : " ,distance, "cm"
 
 		
-		client.publish("environment/ultrasonic",distance)
+		client.publish("environment/ultrasonic",distance) #subscribe에  topic 전송
 		time.sleep(0.5)
 except KeyboardInterrupt:
 	client.loop_stop()
