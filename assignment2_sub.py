@@ -9,7 +9,7 @@ def on_connect(client, userData, flags, rc): #구독할 TOPIC명 저장
 	if rc == 0: 
 		client.subscribe('environment/temperature')
 		client.subscribe('environment/ultrasonic')
-		print "OK"
+		print "OK" #제대로 동작함을 확인하기 위한 print
 	else:
 		print "fail"
 
